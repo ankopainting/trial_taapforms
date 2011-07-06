@@ -8,10 +8,10 @@ class Todoitem
 #  field :count, :type => Integer
 
   validates :entry, :presence => true
-#  validates :count, :presence => true, :length => {:minimum => 3}
+#  validates :count, :presence => true, :length => {:minimum => 1}
 
   schema :user do
-    use :entry
-    use :completed
+    expose :entry
+    expose :completed
   end
 end

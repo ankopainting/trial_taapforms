@@ -23,8 +23,8 @@ module Taapforms
         end
         
         # TODO: should we check if this field exists in the model?
-        def use(field)
-          Rails.logger.info "  use called on #{field}"
+        def expose(field)
+#          Rails.logger.info "  exposing #{field}"
           @fields << field
         end        
       end
