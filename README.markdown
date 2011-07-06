@@ -77,4 +77,5 @@ with this model definition, you could do
 
 in which case you would only see the entry and completed fields.
 
+NOTE: the terms "schema" and "role" are used interchangeably by my code.  It's basically a subset or view of the data in the model, and as such, sometimes suits either description.  I think I'll need to call it schema going forward, but the code isn't there yet.
 

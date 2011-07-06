@@ -8,12 +8,23 @@ module TaapformsHelper
     if obj.class == Mongoid::Criteria
       throw "render_schemaobject: obj should be an object rather than a collection"
     end
+    
+    model_name = ActiveModel::Naming.singular(obj)
 
     template_directory = "#{Rails.root}/schemaobjects/#{template}/"
     unless Dir.exists? template_directory
       throw "render_schemaobject: #{template_directory} does not exist"
     end
-
+    
+    unless role == :default
+      unless obj.class.defined_roles.include? role
+        throw "render_schemaobject: role :#{role} isn't in model #{model_name}"
+      end
+    end
+    
+    Rails.logger.info "render_schemaobject called with template :#{template} and role :#{role}"
+    Rails.logger.info "roles defined in #{model_name} model;\n" + obj.class.pp_defined_roles
+    
     output_string = ""
 
     javascript_string = "(function () {\n"
@@ -22,13 +33,10 @@ module TaapformsHelper
     javascript_string << "})();"
 
     if template == :edit
-      object_name = ActiveModel::Naming.singular(obj)
-      output_string = form_tag({}, {})
-      # TMP add javascript pre
-      
+      output_string = form_tag({}, {})      
       output_string << form_authenticity_token
     end
-    # check for object template
+    # TODO: check for object template which overrides individual templates
     #
     
     # if object template not found, check for templates of each field
@@ -51,18 +59,15 @@ module TaapformsHelper
         end
       end
     end
-
     
     output_string << content_tag(:pre, javascript_string)
-
-
     #debugger
     output_string.html_safe
   end
 
   # iterates an object, excluding useless fields like _type
   # TODO: include role?
-  def iterate_object(obj)
+  def iterate_object(obj, role)
     obj.fields.each_pair do |f,v|
       #special names we don't want to include _type
       unless %w!_type!.include? f
@@ -74,7 +79,7 @@ module TaapformsHelper
   def object_to_schema(obj, role = :default)
     output_object = { :properties => {} }
     output_object[:name] = ActiveModel::Naming.singular(obj)
-    iterate_object(obj) do |k, v|
+    iterate_object(obj, role) do |k, v|
       output_object[:properties][k] = field_to_schema(obj, k, role)
     end
     output_object
@@ -89,7 +94,7 @@ module TaapformsHelper
     hash = {}
     if field.respond_to? :type
       hash = class_to_hash(field)
-      Rails.logger.info hash
+      #Rails.logger.info hash
     end
     validation_object.merge!( hash )
     validation_object[:title] = obj.class.fields[fieldname].label if obj.class.fields[fieldname].label
