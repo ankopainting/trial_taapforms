@@ -1,0 +1,29 @@
+<%= form_for(@todoitem) do |f| %>
+  <% if @todoitem.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@todoitem.errors.count, "error") %> prohibited this todoitem from being saved:</h2>
+
+      <ul>
+      <% @todoitem.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :entry %><br />
+    <%= f.text_field :entry %>
+  </div>
+  <div class="field">
+    <%= f.label :completed %><br />
+    <%= f.check_box :completed %>
+  </div>
+  <div class="field">
+    <%= f.label :made_at %><br />
+    <%= f.datetime_select :made_at %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

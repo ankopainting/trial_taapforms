@@ -1,0 +1,34 @@
+<h1>Listing todoitems</h1>
+
+<table>
+  <tr>
+    <th>Entry</th>
+    <th>Completed</th>
+    <th>Made at</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @todoitems.each do |todoitem| %>
+  <tr>
+    <td><%= todoitem.entry %></td>
+    <td><%= todoitem.completed %></td>
+    <td><%= todoitem.made_at %></td>
+    <td><%= link_to 'Show', todoitem %></td>
+    <td><%= link_to 'Edit', edit_todoitem_path(todoitem) %></td>
+    <td><%= link_to 'Destroy', todoitem, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Todoitem', new_todoitem_path %>
+
+<h4>render_schemaobject(@todoitems.first) test</h4>
+<%= render_schemaobject(@todoitems.first)  %>
+<h4>render_schemaobject(@todoitems.first, :edit) test</h4>
+<%= render_schemaobject(@todoitems.first, :edit)  %>
+</body>
+

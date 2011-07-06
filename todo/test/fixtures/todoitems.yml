@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  entry: MyString
+  completed: false
+  made_at: 2011-07-04 11:01:27
+
+two:
+  entry: MyString
+  completed: false
+  made_at: 2011-07-04 11:01:27

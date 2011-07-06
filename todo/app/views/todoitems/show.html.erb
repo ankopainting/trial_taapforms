@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Entry:</b>
+  <%= @todoitem.entry %>
+</p>
+
+<p>
+  <b>Completed:</b>
+  <%= @todoitem.completed %>
+</p>
+
+<p>
+  <b>Made at:</b>
+  <%= @todoitem.made_at %>
+</p>
+
+<h4>render_schemaobject(@todoitem) test</h4>
+<%= render_schemaobject(@todoitem)  %>
+
+<%= link_to 'Edit', edit_todoitem_path(@todoitem) %> |
+<%= link_to 'Back', todoitems_path %>
