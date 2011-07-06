@@ -60,22 +60,22 @@ I've just added some code that allows you to define schema subsets in the model,
 
 eg. 
 
-		class Todoitem
-		  include Mongoid::Document
-			include Taapforms::SchemaScope # include this line if you want a schema block
-			
-		  field :entry, :type => String, :label => 'Entry'
-		  field :secret, :type => String, :label => 'Admin only secret info'
-		  field :made_at, :type => Time, :label => 'Made at'
-		  field :completed, :type => Boolean, :label => 'Task Completed'
+	class Todoitem
+		include Mongoid::Document
+		include Taapforms::SchemaScope # include this line if you want a schema block
 
-		  validates :entry, :presence => true
+		field :entry, :type => String, :label => 'Entry'
+		field :secret, :type => String, :label => 'Admin only secret info'
+		field :made_at, :type => Time, :label => 'Made at'
+		field :completed, :type => Boolean, :label => 'Task Completed'
 
-			schema :user do
-				expose :entry
-				expose :completed
-			end
+		validates :entry, :presence => true
+
+		schema :user do
+			expose :entry
+			expose :completed
 		end
+	end
 
 with this model definition, you could do
 
