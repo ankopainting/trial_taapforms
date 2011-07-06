@@ -45,6 +45,7 @@ eg.
 This will render the object, in the order the fields are defined in the model.  The templates can access "name" and "object" variables.  If there is no template for a field, it will not be rendered.
 
 Eventually I would like the project to do a few more things;
+
 * allow form views that work properly
 * instead of rendering the templates on the server, make them javascript templates and let the client render them.  Currently I am rendering a pre tag containing some json values and json schema for this purpose.
 * allow you to define schema subsets in the model, so you can instruct the renderer to only render a subset of the fields
@@ -70,6 +71,6 @@ with this model definition, you could do
 
 		<%= render_schemaobject(@todoitem, :view, :user)
 
-in which case you would only see the entry and completed fields
+in which case you would only see the entry and completed fields.
 
 
