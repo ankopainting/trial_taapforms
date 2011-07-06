@@ -21,18 +21,10 @@ module TaapformsHelper
     javascript_string << "var schema = " + JSON.pretty_generate(object_to_schema(obj)) + ";\n"
     javascript_string << "})();"
 
-  
-    #output_string << javascript_tag(javascript_string)
-    output_string << content_tag(:pre, javascript_string)
-
-#    return output_string.html_safe
-
-
     if template == :edit
       object_name = ActiveModel::Naming.singular(obj)
       output_string = form_tag({}, {})
       # TMP add javascript pre
-      output_string << content_tag(:pre, javascript_string)
       
       output_string << form_authenticity_token
     end
@@ -59,6 +51,9 @@ module TaapformsHelper
         end
       end
     end
+
+    
+    output_string << content_tag(:pre, javascript_string)
 
 
     #debugger
