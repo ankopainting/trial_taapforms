@@ -26,10 +26,12 @@ module TaapformsHelper
     Rails.logger.info "roles defined in #{model_name} model;\n" + obj.class.pp_defined_roles
     
     output_string = ""
+    
+#    Rails.logger.info pp(object_to_json(obj, role))
 
     javascript_string = "(function () {\n"
-    javascript_string << "var obj = " + JSON.pretty_generate(JSON.parse(obj.to_json)) + ";\n"
-    javascript_string << "var schema = " + JSON.pretty_generate(object_to_schema(obj)) + ";\n"
+    javascript_string << "var obj = " + JSON.pretty_generate(object_to_json(obj, role)) + ";\n"
+    javascript_string << "var schema = " + JSON.pretty_generate(object_to_schema(obj, role)) + ";\n"
     javascript_string << "})();"
 
     if template == :edit
@@ -41,17 +43,23 @@ module TaapformsHelper
     
     # if object template not found, check for templates of each field
     
-    obj.fields.each_pair do |f,v|
-      # special names we don't want to include _type
+    # if a role is asked for, put it in fieldnames
+    fieldnames = obj.fields.keys
+    fieldnames = obj.class.get_fields_for_schema(role).map {|x| x.to_s} unless role == :default
+    
+    fieldnames.each do |f|
+      field_value = obj.fields[f]
+      # special names we don't want to include eg. _type
       unless %w!_type!.include? f
-        field_template_base = template_directory + v.type.to_s.downcase 
+        
+        field_template_base = template_directory + field_value.type.to_s.downcase 
         field_template = field_template_base + ".html.erb"
         if File.exists? field_template
           #Rails.logger.info "found #{field_template}"
           this_field_value = obj[f]
           
-          label = v.label || f # label of the field or field name
-          options = v.options # options on the field
+          label = field_value.label || f # label of the field or field name
+          options = field_value.options # options on the field
 
           output_string << render(:file => field_template_base, :locals => {:object => this_field_value, :name => label})
         else
@@ -60,7 +68,7 @@ module TaapformsHelper
       end
     end
     
-    output_string << content_tag(:pre, javascript_string)
+    output_string << content_tag(:pre, javascript_string, :class => 'codeblock')
     #debugger
     output_string.html_safe
   end
@@ -68,12 +76,26 @@ module TaapformsHelper
   # iterates an object, excluding useless fields like _type
   # TODO: include role?
   def iterate_object(obj, role)
-    obj.fields.each_pair do |f,v|
+   throw "iterate_object called without a block!" unless block_given? 
+      
+    fieldnames = obj.fields.keys
+    fieldnames = obj.class.get_fields_for_schema(role).map {|x| x.to_s} unless role == :default
+    
+    fieldnames.each do |f|
+      v = obj.fields[f]
       #special names we don't want to include _type
       unless %w!_type!.include? f
         yield f,v 
       end
     end
+  end
+
+  def object_to_json(obj, role)
+    output_object = {  }
+    iterate_object(obj, role) do |k, v|
+      output_object[k] = obj[k]
+    end
+    output_object    
   end
 
   def object_to_schema(obj, role = :default)

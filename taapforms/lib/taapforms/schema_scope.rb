@@ -24,15 +24,15 @@ module Taapforms
         
         # TODO: should we check if this field exists in the model?
         def expose(field)
-#          Rails.logger.info "  exposing #{field}"
           @fields << field
         end        
-      end
+      end # end SchemaDefinition class
       
       # class method on model exporting defined roles
       def defined_roles
         @schemas.keys
       end
+      
       # class method on model exporting defined roles and fields they include
       def pp_defined_roles
         output = ""
@@ -41,6 +41,11 @@ module Taapforms
           output << "    fields: #{v.map {|x| ":#{x}"}.join(', ')}\n"
         end
         output
+      end
+      
+      #
+      def get_fields_for_schema(role)
+        @schemas[role]
       end
       
       # the schema block in models
@@ -52,10 +57,11 @@ module Taapforms
         else
           throw "Taapforms::SchemaScope; schema needs a block!"
         end
-        Rails.logger.info "end of scope #{@current_schema}"
+        Rails.logger.info "end of scope #{role.to_s}"
       end
 
     end
+    
     # not needed currently
     module InstanceMethods
     end

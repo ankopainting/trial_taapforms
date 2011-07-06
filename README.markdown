@@ -52,7 +52,11 @@ Eventually I would like the project to do a few more things;
 
 * allow form views that work properly
 * instead of rendering the templates on the server, make them javascript templates and let the client render them.  Currently I am rendering a pre tag containing some json values and json schema for this purpose.
-* allow you to define schema subsets in the model, so you can instruct the renderer to only render a subset of the fields
+
+Schema views
+------------
+
+I've just added some code that allows you to define schema subsets in the model, so you can instruct the renderer to only render a subset of the fields
 
 eg. 
 
@@ -78,8 +82,6 @@ with this model definition, you could do
 		<%= render_schemaobject(@todoitem, :view, :user)
 
 in which case you would only see the entry and completed fields.
-
-NOTE: schema blocks/expose now added, but the render_schemaobject doesn't respect it.
 
 NOTE: the terms "schema" and "role" are used interchangeably by my code.  It's basically a subset or view of the data in the model, and as such, sometimes suits either description.  I think I'll need to call it schema going forward, but the code isn't there yet.
 
