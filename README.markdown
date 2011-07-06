@@ -1,5 +1,5 @@
 Trial Taapforms
----------------
+===============
 
 Hi, this is just a starting repository so I can experiment with a rails 3.1 plugin I want to create.
 
@@ -24,6 +24,7 @@ The main idea is that your application has a schemaobjects directory.  This cont
 each of these template directories has a bunch of templates, loosely echoing data types in mongodb
 
 example file structure:
+
 		schemaobjects/
 		schemaobjects/view/
 		schemaobjects/view/boolean.html.erb
@@ -33,9 +34,13 @@ example file structure:
 		schemaobjects/edit/string.html.erb
 
 there is also a helper, 
+
 		render_schemaobject(object, templateset = :view, role = :default) 
+		
 eg. 
+
 		<%= render_schemaobject(@todoitem, :edit)  %>
+		
 
 This will render the object, in the order the fields are defined in the model.  The templates can access "name" and "object" variables.  If there is no template for a field, it will not be rendered.
 
