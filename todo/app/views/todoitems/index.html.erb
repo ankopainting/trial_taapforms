@@ -26,11 +26,14 @@
 
 <%= link_to 'New Todoitem', new_todoitem_path %>
 
+<div class='renderer'>
 <h4>render_schemaobject(@todoitems.first) test</h4>
 <%= render_schemaobject(@todoitems.first)  %>
-
+</div>
+<div class='renderer'>
 <h4>render_schemaobject(@todoitems.first, :view, :user) test</h4>
 <%= render_schemaobject(@todoitems.first, :view, :user)  %>
+</div>
 <!--<h4>render_schemaobject(@todoitems.first, :edit) test</h4>
 <%#= render_schemaobject(@todoitems.first, :edit)  %>-->
 </body>

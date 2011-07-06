@@ -54,3 +54,18 @@ div {
   ul li {
     font-size: 12px;
     list-style: square; } }
+
+.renderer {
+	background: #ccc;
+	padding: 10px;
+	margin: 10px 0;
+	h4 { 
+		padding: 0;
+		margin: 0;
+		margin-bottom: 15px; 
+		}
+	a {
+		margin-top: 10px;
+		display: block;
+	}
+}
