@@ -13,6 +13,10 @@ Setup
 * bundle install
 * rails server
 * goto http://localhost:3000
+* add a todoitem 
+* go to index or show actions
+* update your model todo/app/models/todoitem.rb
+* refresh the page :) 
 
 Concept
 -------
