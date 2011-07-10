@@ -85,3 +85,15 @@ in which case you would only see the entry and completed fields.
 
 NOTE: the terms "schema" and "role" are used interchangeably by my code.  It's basically a subset or view of the data in the model, and as such, sometimes suits either description.  I think I'll need to call it schema going forward, but the code isn't there yet.
 
+Questions
+=========
+
+* Should I implement a special schema handler in rails? 
+* Should I force a standard path to access the schemas/data from?
+* What would be the best javascript/coffeescript templating engine for my purposes
+
+License
+=======
+
+This project is released under the MIT license - see License.markdown for details
+
